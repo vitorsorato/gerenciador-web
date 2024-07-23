@@ -1,0 +1,39 @@
+{
+	"extends": ["eslint:recommended", "next", "prettier"],
+	"plugins": ["eslint-plugin-import-helpers", "jest"],
+	"env": {
+		"browser": true,
+		"node": true,
+		"jest": true
+	},
+	"rules": {
+		"import-helpers/order-imports": [
+			"warn",
+			{
+				"newlinesBetween": "always",
+				"groups": [
+					"/^react/",
+					"module",
+					"/^@/",
+					"/^components/",
+					"/^hooks/",
+					"/^utils/",
+					"/^config/",
+					["parent", "sibling", "index"]
+				],
+				"alphabetize": {
+					"order": "asc",
+					"ignoreCase": true
+				}
+			}
+		],
+		"react/prop-types": "off",
+		"react/jsx-uses-react": "error",
+		"react/jsx-uses-vars": "error",
+		"no-console": "warn",
+		"react-hooks/rules-of-hooks": "error",
+		"react-hooks/exhaustive-deps": "warn",
+		"linebreak-style": ["off", "windows"],
+		"@next/next/no-img-element": "off"
+	}
+}
