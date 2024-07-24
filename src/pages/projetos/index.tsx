@@ -10,21 +10,19 @@ import { useCallback, useEffect, useState } from 'react';
 import { useToast } from '@/components/ui/use-toast';
 
 type ProjectsResponse = {
-  id: string;
+  	id: string;
 	name: string;
 	startDate: Date;
 	endDate: Date;
 };
 
 export default function DashboardPage() {
-  const [isLoading, setIsLoading] = useState(false);
   const [cards, setCards] = useState<ProjectsResponse[]>([]);
 
   const { toast } = useToast();
 
   const loadProjects = useCallback(async () => {
 		try {
-			setIsLoading(true);
 			const response = (await getProjects()) as Response;
 			const data = await response.json();
 			setCards(data);
@@ -34,8 +32,6 @@ export default function DashboardPage() {
 				title: 'Não foi possivel carregar os plugins',
 				description: JSON.stringify((error as any).message),
 			});
-		} finally {
-			setIsLoading(false);
 		}
 	}, [toast]);
 
@@ -50,7 +46,6 @@ export default function DashboardPage() {
     <>
       <Head>
         <title>Projetos | Artia</title>
-        {isLoading}
       </Head>
       <HeaderNav />
       <div className="mt-4 p-8">

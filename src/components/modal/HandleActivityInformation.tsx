@@ -14,7 +14,7 @@ import { Calendar } from '../ui/calendar';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '../ui/dialog';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form';
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
-import { createActivity, updateActivity } from '@/services/activities';
+import { createActivity, deleteActivity, updateActivity } from '@/services/activities';
 
 
 
@@ -25,6 +25,7 @@ type HandleActivityInformationProps = {
   name: string;
   startDate: Date; 
   endDate: Date;
+  projectId: string;
 };
 
 const formSchema = z.object({
@@ -63,11 +64,9 @@ export default function HandleActivityInformation({ children, ...props }: Handle
 
   async function handleDelete() {
     if (props.activityId) {
-      // Add logic to delete the activity
-      // await deleteactivity(props.activityId);
+      await deleteActivity(props.activityId); 
     }
     handleOnActivitysChange();
-    cleanModal();
   }
 
   async function retrieveActivityInformation() {
@@ -84,6 +83,7 @@ export default function HandleActivityInformation({ children, ...props }: Handle
       if (props.activityId) {
         var formactivityUpdate = {
           id: props.activityId,
+          projectId: Number(props.projectId),
           name: values.name,
           startDate: values.startDate ? values.startDate : new Date(),
           endDate: values.endDate ? values.endDate : new Date(),
@@ -91,6 +91,7 @@ export default function HandleActivityInformation({ children, ...props }: Handle
         await updateActivity(props.activityId, formactivityUpdate);
       } else {
         var formCreateactivity = {
+          projectId: Number(props.projectId),
           name: values.name,
           startDate: values.startDate ? values.startDate : new Date(),
           endDate: values.endDate ? values.endDate : new Date(),

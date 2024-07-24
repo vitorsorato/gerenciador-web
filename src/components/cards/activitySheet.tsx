@@ -1,24 +1,29 @@
+import { useCallback, useState } from 'react';
+
 import { BadgePlus, Clipboard } from 'lucide-react';
+
+import { getActivities } from '@/services/activities';
+
+import HandleActivityInformation from '../modal/HandleActivityInformation';
 import { Button } from '../ui/button';
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from '../ui/sheet';
-import HandleActivityInformation from '../modal/HandleActivityInformation';
-import { useCallback, useState } from 'react';
-import { getActivities } from '@/services/activities';
 import { useToast } from '../ui/use-toast';
+import ActivityCard from './activityCard';
 
-export function ActivitySheet(props: { id: string; type: string; name : string; }) {
+export function ActivitySheet(props: { id: string; name : string; }) {
 
 	type ActivitiesResponse = {
 		id: string;
-		  name: string;
-		  startDate: Date;
-		  endDate: Date;
+		name: string;
+		startDate: Date;
+		endDate: Date;
+		completed: boolean;
 	  };
 
 	const [cards, setCards] = useState<ActivitiesResponse[]>([]);
 	const { toast } = useToast();
 
-	const loadProjects = useCallback(async () => {
+	const loadActivities = useCallback(async () => {
 		try {
 			const response = (await getActivities(props.id)) as Response;
 			const data = await response.json();
@@ -26,17 +31,21 @@ export function ActivitySheet(props: { id: string; type: string; name : string; 
 		} catch (error) {
 			toast({
 				variant: 'destructive',
-				title: 'Não foi possivel carregar os plugins',
+				title: 'Não foi possível carregar as atividades',
 				description: JSON.stringify((error as any).message),
 			});
 		}
-	}, [toast]);
+	}, [props.id, toast]);
+
+	const handleOpen = async () => {
+		await loadActivities();
+	};
 
 	return (
-		<Sheet>
+		<Sheet onOpenChange={handleOpen}>
 			<SheetTrigger asChild>
-				<Button size={'icon'} variant={'ghost'} onClick={()=>{}}>
-				<Clipboard className="h-4 w-4" />
+				<Button size={'icon'} variant={'ghost'}>
+					<Clipboard className="h-4 w-4" />
 				</Button>
 			</SheetTrigger>
 			<SheetContent className="w-full overflow-auto">
@@ -44,25 +53,37 @@ export function ActivitySheet(props: { id: string; type: string; name : string; 
 					<SheetTitle>Atividades</SheetTitle>
 					<SheetDescription>{'Atividades relacionadas ao projeto '  + props.name + '.'}</SheetDescription>
 				</SheetHeader>
-
 				<div className="mt-4 grid gap-2">
-
-				{cards?.length === 0? (
-			<div className="flex justify-start">
-				<p className="order-2 text-sm text-gray-400">Nenhum projeto criado.</p>
-			</div>
-		) : (
-			cards?.map((project, index) => (
-				<div key={index}>{project.name}</div>
-			))
-		)}
-
-				<HandleActivityInformation name={''} startDate={new Date()} endDate={new Date()} onActivitysChange={loadProjects}>
-					<Button>
-						<BadgePlus className="mr-2 h-4 w-4" />
-						Projeto
-					</Button>
-            	</HandleActivityInformation>
+					{cards?.length === 0 ? (
+						<div className="flex justify-start">
+							<p className="order-2 text-sm text-gray-400">Nenhuma atividade criada.</p>
+						</div>
+					) : (
+						cards?.map((activity, index) => (
+							<div key={index}>
+								<ActivityCard 
+									id={activity.id} 
+									projectId={props.id} 
+									onActivitiesChange={loadActivities} 
+									name={activity.name} 
+									endDate={activity.endDate} 
+									startDate={activity.startDate} 
+									completed={activity.completed} 
+								/>
+							</div>
+						))
+					)}
+					<HandleActivityInformation 
+						projectId={props.id} 
+						name={''} 
+						startDate={new Date()} 
+						endDate={new Date()} 
+						onActivitysChange={loadActivities}>
+						<Button>
+							<BadgePlus className="mr-2 h-4 w-4" />
+							Atividade
+						</Button>
+					</HandleActivityInformation>
 				</div>
 			</SheetContent>
 		</Sheet>

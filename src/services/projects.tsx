@@ -25,4 +25,6 @@ export async function getProjects() {
 	return await fetchData('/projects', null, 'GET')
 }
 
-
+export async function deleteProject(id: string) {
+	return await fetchData(`/projects/${id}`, null, 'DELETE')
+}

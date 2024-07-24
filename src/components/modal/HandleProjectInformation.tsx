@@ -8,15 +8,13 @@ import * as z from 'zod';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
-import { createProject, updateProject } from '@/services/projects';
+import { createProject, deleteProject, updateProject } from '@/services/projects';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { Calendar } from '../ui/calendar';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '../ui/dialog';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form';
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
-
-
 
 type HandleProjectInformationProps = {
   children: React.ReactNode;
@@ -63,11 +61,9 @@ export default function HandleProjectInformation({ children, ...props }: HandleP
 
   async function handleDelete() {
     if (props.projectId) {
-      // Add logic to delete the project
-      // await deleteProject(props.projectId);
+      await deleteProject(props.projectId); 
     }
     handleOnProjectsChange();
-    cleanModal();
   }
 
   async function retrieveProjectInformation() {
