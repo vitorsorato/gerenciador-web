@@ -2,6 +2,9 @@
 
 Este projeto é um sistema para gerenciar projetos e atividades, com o backend desenvolvido em Node.js, TypeScript e Prisma ORM, e o frontend em React, Next.js e Tailwind CSS.
 
+![Tela Inicial](https://github.com/vitorsorato/gerenciador-web/blob/master/gerenciador_inicio.gif)
+
+
 ## Tecnologias
 
 - **Backend**: Node.js, Express, TypeScript, Prisma ORM
@@ -80,3 +83,7 @@ Os testes do backend, realizados com Supertest, cobrem as seguintes operações:
   - Listar Atividades: Testa a listagem de todas as atividades para um projeto específico.
   - Atualizar Atividade: Testa a atualização de uma atividade existente.
   - Deletar Atividade: Testa a exclusão de uma atividade.
+
+
+
+[Visite o Gerenciador](https://gerenciador-web.vercel.app/projetos)
