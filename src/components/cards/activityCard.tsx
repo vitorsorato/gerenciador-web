@@ -4,21 +4,25 @@ import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '../ui/
 import HandleActivityInformation from '../modal/HandleActivityInformation';
 import { Checkbox } from '../ui/checkbox';
 import { setCheckedActivity } from '@/services/activities';
+import { useState } from 'react';
 
 
 export default function ActivityCard(props: {id: string, projectId: string, onActivitiesChange: () => Promise<void>; name: string, endDate: Date, startDate: Date, completed: boolean }) {
 	// eslint-disable-next-line no-unused-vars
-	
+	const [isLoading, setIsLoading] = useState(false);
 	const stringStartDate = new Date(props.startDate).toLocaleDateString('pt-BR');
 	const stringEndDate = new Date(props.endDate).toLocaleDateString('pt-BR');
 	const stringDescription = stringStartDate + " até " + stringEndDate
 
 	const handleChecked = async () => {
 		try {
+			setIsLoading(true)
 			await setCheckedActivity(props.id);
 			props.onActivitiesChange();
 		} catch (error) {
 			console.log(error);
+		} finally {
+			setIsLoading(false)
 		}
 	};
 
@@ -28,6 +32,7 @@ export default function ActivityCard(props: {id: string, projectId: string, onAc
 				<CardTitle className="truncate text-lg justify-between flex">{props.name}
 				<Checkbox
 						className='mt-2'
+						disabled={isLoading}
 						checked={props.completed}
 						onCheckedChange={handleChecked}
 						/>
