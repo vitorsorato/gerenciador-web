@@ -10,7 +10,7 @@ import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTr
 import { useToast } from '../ui/use-toast';
 import ActivityCard from './activityCard';
 
-export function ActivitySheet(props: { id: string; name : string; }) {
+export function ActivitySheet(props: { onProjectsChange: () => Promise<void>; id: string; name : string; }) {
 
 	type ActivitiesResponse = {
 		id: string;
@@ -28,6 +28,8 @@ export function ActivitySheet(props: { id: string; name : string; }) {
 			const response = (await getActivities(props.id)) as Response;
 			const data = await response.json();
 			setCards(data);
+
+			props.onProjectsChange();
 		} catch (error) {
 			toast({
 				variant: 'destructive',

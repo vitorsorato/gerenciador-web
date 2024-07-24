@@ -19,7 +19,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 type HandleProjectInformationProps = {
   children: React.ReactNode;
   projectId?: string;
-  onProjectsChange: any;
+  onProjectsChange: () => Promise<void>;
   name: string;
   startDate: Date; 
   endDate: Date;

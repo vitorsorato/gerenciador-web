@@ -14,6 +14,7 @@ type ProjectsResponse = {
 	name: string;
 	startDate: Date;
 	endDate: Date;
+	percentComplete: number;
 };
 
 export default function DashboardPage() {
@@ -72,6 +73,7 @@ export default function DashboardPage() {
 					name={project.name}
 					startDate={project.startDate}
 					endDate={project.endDate}
+					percentComplete={project.percentComplete}
 				/>
 			))
 		)}
