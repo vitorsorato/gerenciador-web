@@ -8,6 +8,7 @@ import { BadgePlus } from 'lucide-react';
 import Head from 'next/head';
 import { useCallback, useEffect, useState } from 'react';
 import { useToast } from '@/components/ui/use-toast';
+import { Skeleton } from '@/components/ui/skeleton';
 
 type ProjectsResponse = {
   	id: string;
@@ -83,6 +84,17 @@ export default function DashboardPage() {
 			))
 		)
 	) : null}
+			{isLoading && cards.length === 0 ? (
+			<>
+				<Skeleton className="h-36 w-full rounded-xl " />
+				<Skeleton className="h-36 w-full rounded-xl opacity-80" />
+				<Skeleton className="h-36 w-full rounded-xl opacity-60" />
+				<Skeleton className="h-36 w-full rounded-xl opacity-40" />
+				<Skeleton className="h-36 w-full rounded-xl opacity-20" />
+				<Skeleton className="h-36 w-full rounded-xl opacity-10" />
+				<Skeleton className="h-36 w-full rounded-xl opacity-5" />
+			</>
+		) : null}
         </div>
       </div>
     </>
