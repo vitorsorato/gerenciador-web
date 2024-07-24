@@ -1,1 +1,1 @@
-export const URL_API = "http://localhost:4000";
+export const URL_API = "https://gerenciador-server-production.up.railway.app";

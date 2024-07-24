@@ -60,7 +60,8 @@ export default function DashboardPage() {
             </HandleProjectInformation>
           </div>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 3xl:grid-cols-5 4xl:grid-cols-6">
-        {cards?.length === 0? (
+        {cards && Array.isArray(cards) ? (
+				cards.length === 0 ? (
 			<div className="flex justify-start">
 				<p className="order-2 text-sm text-gray-400">Nenhum projeto criado.</p>
 			</div>
@@ -76,7 +77,8 @@ export default function DashboardPage() {
 					percentComplete={project.percentComplete}
 				/>
 			))
-		)}
+		)
+	) : null}
         </div>
       </div>
     </>
