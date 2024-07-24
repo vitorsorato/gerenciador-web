@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 
-import { BadgePlus, Clipboard } from 'lucide-react';
+import { BadgePlus, ClipboardList } from 'lucide-react';
 
 import { getActivities } from '@/services/activities';
 
@@ -47,7 +47,7 @@ export function ActivitySheet(props: { onProjectsChange: () => Promise<void>; id
 		<Sheet onOpenChange={handleOpen}>
 			<SheetTrigger asChild>
 				<Button size={'icon'} variant={'ghost'}>
-					<Clipboard className="h-4 w-4" />
+					<ClipboardList className="h-4 w-4" />
 				</Button>
 			</SheetTrigger>
 			<SheetContent className="w-full overflow-auto">

@@ -19,11 +19,13 @@ type ProjectsResponse = {
 
 export default function DashboardPage() {
   const [cards, setCards] = useState<ProjectsResponse[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const { toast } = useToast();
 
   const loadProjects = useCallback(async () => {
 		try {
+			setIsLoading(true);
 			const response = (await getProjects()) as Response;
 			const data = await response.json();
 			setCards(data);
@@ -33,6 +35,8 @@ export default function DashboardPage() {
 				title: 'Não foi possivel carregar os plugins',
 				description: JSON.stringify((error as any).message),
 			});
+		}finally{
+			setIsLoading(false);
 		}
 	}, [toast]);
 
@@ -61,7 +65,7 @@ export default function DashboardPage() {
           </div>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 3xl:grid-cols-5 4xl:grid-cols-6">
         {cards && Array.isArray(cards) ? (
-				cards.length === 0 ? (
+				cards.length === 0 && !isLoading ? (
 			<div className="flex justify-start">
 				<p className="order-2 text-sm text-gray-400">Nenhum projeto criado.</p>
 			</div>
