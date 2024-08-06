@@ -2,8 +2,11 @@
 
 Este projeto é um sistema para gerenciar projetos e atividades, com o backend desenvolvido em Node.js, TypeScript e Prisma ORM, e o frontend em React, Next.js e Tailwind.
 
-![Tela Inicial](https://github.com/vitorsorato/gerenciador-web/blob/master/gerenciador_inicio.gif)
+É possivel visualizar todo o grafo acessando a pagina inicial:
+![Tela Inicial](https://github.com/vitorsorato/graph_python/blob/main/sources/grafos.png)
 
+Ao clicar em um grafo é possivel ver as conexões de nivel 1 e 2, bem como excluir o grafo e editar conexões:
+![Tela Inicial](https://github.com/vitorsorato/graph_python/blob/main/sources/amizades.png)
 
 # Funcionalidades da Aplicação
 
